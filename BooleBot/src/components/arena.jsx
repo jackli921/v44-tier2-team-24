@@ -2,7 +2,8 @@ import {useState, useEffect} from 'react'
 
 export default function Arena() {
     const [arenaSize, setArenaSize] = useState(3)
-
+    
+    
    
     /*
     const generateArena = () => {
@@ -35,7 +36,7 @@ function renderArena() {
 
     for(let i =0 ; i < arenaSize * arenaSize; i++){
         arrayTile.push(
-            <div className='tile' data-position={i + 1} >
+            <div key={i} className='tile' data-position={i + 1} >
             </div>
         )
     }
