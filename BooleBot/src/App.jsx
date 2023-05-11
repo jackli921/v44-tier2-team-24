@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import Arena from './components/arena'
-import InputForm from './components/InputForm'
 
 function App() {
 
@@ -17,7 +16,6 @@ function App() {
   return (
     <>
     <div>
-      <InputForm />
       {/* <form action="" onSubmit={handleSubmit} >
         <div>
           <label htmlFor="name">Bot Name:</label>
