@@ -49,7 +49,7 @@ export default function Arena(props) {
   const renderTile = (tilePosition, robotIndex ) => {
     
     const robot = robotIndex >= 0 ? botsArr[robotIndex] : null;
-    const tileClass = robot ? robot.color : "";
+    const tileClass = robot ? `${robot.name} ${robot.color}` : "";
     
     return (
       <div
