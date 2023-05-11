@@ -1,5 +1,14 @@
 import {useState, useEffect} from 'react'
 
+// 1. Build the game arena.
+// 2. Add 1 robot to the board.
+// 3. Make 1 robot move in the assigned direction on click.
+// 4. Make 1 robot change to a valid direction when it hits a wall.
+// 5. Make the robot move automatically.
+// 6. Add more than 1 robot to the board.
+// 7. Add basic collision logic.
+
+
 export default function Arena(props) {
   const [isValidPosition, setIsValidPosition] = useState(false);
   const [initialPosition, setInitialPosition] = useState([]);
@@ -10,20 +19,19 @@ export default function Arena(props) {
   const [botsArr, setBotsArr] = useState([
     {
       name: "bot1",
-      position: "5",
+      position: "1",
       direction: "1",
       value: "0",
       color: "red",
     },
     {
       name: "bot2",
-      position: "6",
+      position: "2",
       direction: "3",
       value: "1",
       color: "blue",
     },
   ]);
-
 
     const arenaStyles = {
         gridTemplateColumns: `repeat(${numTilesPerSide}, 100px)`,
@@ -32,7 +40,8 @@ export default function Arena(props) {
 
   const renderArena = ()=>{
 
-    const positions = Array.from({ length: numTilesPerSide * numTilesPerSide }, (_, i)=> i +1);
+    const positions = Array.from({ length: numTilesPerSide * numTilesPerSide }, (_, i)=> i + 1);
+    console.log(positions)
     return (
         <div className="arena" style={arenaStyles}>
           {
@@ -63,8 +72,9 @@ export default function Arena(props) {
   };
 
   function startGame() {
-    console.log("Game starts now!");
     setIsGameRunning(true);
+
+
   }
 
   return (
