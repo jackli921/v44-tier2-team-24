@@ -73,7 +73,7 @@ export default function Arena(props) {
 
   function startGame() {
     setIsGameRunning(true);
-
+    
 
   }
 
