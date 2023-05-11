@@ -1,13 +1,7 @@
 import { useState, useEffect } from 'react'
-import Arena from './components/arena'
+import Arena from './components/Arena'
 
 function App() {
-
-  const [botsArr, setBotsArr] = useState([])
-
-  const [botName, setBotName] = useState('')
-  const [botValue, setBotValue] = useState(null)
-  const [botColor, setBotColor] = useState('')
   
   const handleSubmit = () =>{
 
@@ -15,8 +9,8 @@ function App() {
 
   return (
     <>
-    <div>
-      {/* <form action="" onSubmit={handleSubmit} >
+      <div>
+        {/* <form action="" onSubmit={handleSubmit} >
         <div>
           <label htmlFor="name">Bot Name:</label>
           <input name="name" id="name" type="text" placeholder="Bender" onChange={(e) => setBotName(e.target.value)} />
@@ -43,10 +37,11 @@ function App() {
         </div>
 
       </form> */}
-    </div>
-    <Arena />
+      </div>
+      <Arena
+      />
     </>
-  )
+  );
 }
 
 export default App

@@ -37,3 +37,32 @@ body{
 .tile{
   border: 1px solid black;
 }
+
+.cell {
+  border: 1px solid black;
+}
+
+.tan {
+  background-color: tan;
+}
+
+.red {
+  background-color: red
+}
+
+.blue{
+  background-color: blue;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.green {
+  background-color: green;
+}
+
+
+button {
+  cursor: pointer;
+}

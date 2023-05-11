@@ -1,56 +1,76 @@
 import {useState, useEffect} from 'react'
 
-export default function Arena() {
-    const [arenaSize, setArenaSize] = useState(3)
+export default function Arena(props) {
+  const [isValidPosition, setIsValidPosition] = useState(false);
+  const [initialPosition, setInitialPosition] = useState([]);
+  const [totalTileNum, setTotalTileNum] = useState(null);
+  const [numTilesPerSide, setNumTilesPerSide] = useState(3);
+  const [isGameRunning, setIsGameRunning] = useState(false);
+  const [operator, setOperator] = useState("AND");
+  const [botsArr, setBotsArr] = useState([
+    {
+      name: "bot1",
+      position: "5",
+      direction: "1",
+      value: "0",
+      color: "red",
+    },
+    {
+      name: "bot2",
+      position: "6",
+      direction: "3",
+      value: "1",
+      color: "blue",
+    },
+  ]);
+
+
+    const arenaStyles = {
+        gridTemplateColumns: `repeat(${numTilesPerSide}, 100px)`,
+        gridTemplateRows: `repeat(${numTilesPerSide}, 100px)`,
+    };
+
+  const renderArena = ()=>{
+
+    const positions = Array.from({ length: numTilesPerSide * numTilesPerSide }, (_, i)=> i +1);
+    return (
+        <div className="arena" style={arenaStyles}>
+          {
+            positions.map(tilePosition => {
+                
+                const robotIndex = botsArr.findIndex(bot => bot.position === tilePosition.toString())
+                
+                return renderTile(tilePosition, robotIndex);
+            })}
+        </div>
+      );}
+
+
+  const renderTile = (tilePosition, robotIndex ) => {
     
+    const robot = robotIndex >= 0 ? botsArr[robotIndex] : null;
+    const tileClass = robot ? robot.color : "";
     
-   
-    /*
-    const generateArena = () => {
-    let position = 1
+    return (
+      <div
+        key={tilePosition + 1}
+        data-position={tilePosition + 1}
+        className={`tile ${tileClass}`}
+      >
+        {tilePosition}
+      </div>
+    );
+  };
 
-    for (let j = 0; j < arenaSize * arenaSize; j++) {
-            const cell = document.createElement('div')
+  function startGame() {
+    console.log("Game starts now!");
+    setIsGameRunning(true);
+  }
 
-            //will hold the position of the current tile
-            cell.dataset.position = position
-
-            //add a cell style to the new div
-            cell.classList.add('cell')
-
-            //will be uesd to label the tile with it's current position
-            cell.innerText = position
-
-            arena.appendChild(cell)
-            position++
-        }
-}
-
-arena.style.gridTemplateColumns = `repeat( ${tile} , 50px )`
-arena.style.gridTemplateRows = `repeat( ${tile} , 50px )`
-
-    */
-
-function renderArena() {
-    const arrayTile = []
-
-    for(let i =0 ; i < arenaSize * arenaSize; i++){
-        arrayTile.push(
-            <div key={i} className='tile' data-position={i + 1} >
-            </div>
-        )
-    }
-    return arrayTile
-}
-
-const arenaStyles = {
-    gridTemplateColumns: `repeat(${arenaSize}, 100px)`,
-    gridTemplateRows: `repeat(${arenaSize}, 100px)`
-}
-  
-return (
-  <div className="arena" style={arenaStyles}>
-    {renderArena()}
-  </div>
-);
+  return (
+    <div>
+      {renderArena()}
+      <button onClick={() => startGame()}>Start</button>
+    </div>
+  );
 }
