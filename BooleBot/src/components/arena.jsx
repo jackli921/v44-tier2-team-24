@@ -17,13 +17,13 @@ export default function Arena(props) {
   const [totalTileNum, setTotalTileNum] = useState(null);
   const [numTilesPerSide, setNumTilesPerSide] = useState(2);
   const [isGameRunning, setIsGameRunning] = useState(false);
-  const [operator, setOperator] = useState("AND");
+  const [operator, setOperator] = useState("NOR");
 
 //   position, direction, tile, name, colorClass, value
 
   const [botsArr, setBotsArr] = useState([
-    new BotClass(2, 2, numTilesPerSide, "bot1", "red", 1),
-    new BotClass(3, 4, numTilesPerSide, "bot2", "blue", 1)
+    new BotClass(2, 2, numTilesPerSide, "bot1", "red", 0),
+    new BotClass(3, 4, numTilesPerSide, "bot2", "blue", 0)
   ]);
 
     const arenaStyles = {
@@ -64,34 +64,53 @@ export default function Arena(props) {
   };
 
   function startGame() {
-    
-    botsArr.forEach(bot => {
-      bot.calcNextMove()
-      //map each old state 
+    // add setInterval and removeInterval
+    // refactor the score-updating logic to use setter function instead of mutating array by reference
+    // add scoreboard array to keep track of total wins and loses for each bot before losing bot is remvoed from botsArr
+
+    botsArr.forEach((bot) => {
+      bot.calcNextMove();
+      //map each old state
       //and if the name is not equal to bot.name
       //push bot that hans'nt been changed
       //and if bot.name === name changing
       //cretate a new object, with the same properties but new position
 
-      if(checkCollision(botsArr)){
-        handleCollision(botsArr, operator)
+      if (checkCollision(botsArr)) {
+        handleCollision(botsArr, operator);
       }
 
       //create a new copy of botsArray with updated property values
-      const newBotsArr = botsArr.map( oldBot => {
-        if(bot.name !== oldBot.name ){
-          return new BotClass(oldBot.position , oldBot.direction, numTilesPerSide, oldBot.name, oldBot.colorClass, oldBot.value, oldBot.wins, oldBot.loses)
-           
+      const newBotsArr = botsArr.map((oldBot) => {
+        if (bot.name !== oldBot.name) {
+          return new BotClass(
+            oldBot.position,
+            oldBot.direction,
+            numTilesPerSide,
+            oldBot.name,
+            oldBot.colorClass,
+            oldBot.value,
+            oldBot.wins,
+            oldBot.loses
+          );
+        } else {
+          return new BotClass(
+            bot.position,
+            bot.direction,
+            numTilesPerSide,
+            bot.name,
+            bot.colorClass,
+            bot.value,
+            bot.wins,
+            bot.loses
+          );
         }
-        else{
-          return new BotClass(bot.position, bot.direction, numTilesPerSide, bot.name, bot.colorClass, bot.value, bot.wins, bot.loses)
-        }
-      })
+      });
 
       //update the state of the bots array
       setBotsArr(newBotsArr);
-    })
- }
+    });
+  }
  console.log(botsArr);
 
   return (

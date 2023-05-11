@@ -16,6 +16,15 @@ const checkCollision = (botsArr) =>{
     return false
 }
 
+const updateScore = (result, botOne, botTwo) => {
+    if(result){
+        botOne.wins = botOne.wins + 1
+        botTwo.loses = botTwo.loses + 1
+    }
+    else{
+        console.log("It's a a tie!")
+    }
+}
 
 const handleCollision = (botsArr, operator) => {
     console.log('COLLISION!!!!!!!!!!')
@@ -63,51 +72,27 @@ const handleCollision = (botsArr, operator) => {
 
     // determine winer & loser
     // using AND 
+
+
     
     switch(operator){
         case "AND":
             const AND_Result = colidedBots[0].value && colidedBots[1].value
-            if(!AND_Result){
-                console.log("It's a tie")
-            }
-            else{
-            console.log(colidedBots[0].name, "Won!")
-            colidedBots[0].wins = colidedBots[0].wins + 1
-            colidedBots[1].loses = colidedBots[0].loses + 1
-            
-            }
+            updateScore(AND_Result, colidedBots[0], colidedBots[1]);
+
+            // refactor the score-updating logic to use setter function instead of mutating array by reference
             break
         case "OR":
             const OR_Result = colidedBots[0].value || colidedBots[1].value
-            if(!OR_Result){
-                console.log("It's a tie")
-            }
-            else{
-                botsArr = botsArr.filter(bot => bot.name !== colidedBots[1].name)
-                console.log("UPDATED BOTS ARRAY ", botsArr)
-            }
+            updateScore(OR_Result, colidedBots[0], colidedBots[1]);
             break
         case "XOR":
             const XOR_Result = colidedBots[0].value ^ colidedBots[1].value
-            if(!XOR_Result){
-                console.log("It's a tie")
-            }
-            else{
-                
-                botsArr = botsArr.filter(bot => bot.name !== colidedBots[1].name)
-                console.log("UPDATED BOTS ARRAY ", botsArr)
-            }
+            updateScore(XOR_Result, colidedBots[0], colidedBots[1]);
             break
         case "NOR":
             const NOR_Result = !(colidedBots[0].value || colidedBots[1].value)
-            if(NOR_Result){
-                
-                botsArr = botsArr.filter(bot => bot.name !== colidedBots[1].name)
-                console.log("UPDATED BOTS ARRAY ", botsArr)
-            }
-            else{
-                 console.log("It's a tie")
-            }
+            updateScore(NOR_Result, colidedBots[0], colidedBots[1])
             break
     }
 }
