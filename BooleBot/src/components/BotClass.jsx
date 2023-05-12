@@ -41,18 +41,18 @@ class BotClass {
         }
         
         let randIndex = generateRandomNumber(validDirections.length)
-        console.log(`old direction ${this.printDirection()}`)
+        // console.log(`old direction ${this.printDirection()}`)
         this.direction = validDirections[randIndex - 1]
-        console.log(`New direction ${this.printDirection()}`)
+        // console.log(`New direction ${this.printDirection()}`)
 
     }
 
     updateBotPosition(newPosition){
         this.position = newPosition
         
-        console.log(`New position now: ${this.printBotData()}`)
+        // console.log(`New position now: ${this.printBotData()}`)
 
-        console.log('#######################################################################################')
+        // console.log('#######################################################################################')
     }
 
     //will determine if the bots next movement is valid
@@ -104,7 +104,7 @@ class BotClass {
     }
     
     calcNextMove() {
-        console.log(`Moving Bot : ${this.printBotData()}`)
+        // console.log(`Moving Bot : ${this.printBotData()}`)
 
         this.setNextDirection()
 

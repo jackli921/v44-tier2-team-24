@@ -20,9 +20,11 @@ const updateScore = (result, botOne, botTwo) => {
     if(result){
         botOne.wins = botOne.wins + 1
         botTwo.loses = botTwo.loses + 1
+        return botTwo
     }
     else{
         console.log("It's a a tie!")
+        return 
     }
 }
 
@@ -73,26 +75,24 @@ const handleCollision = (botsArr, operator) => {
     // determine winer & loser
     // using AND 
 
-
-    
     switch(operator){
         case "AND":
             const AND_Result = colidedBots[0].value && colidedBots[1].value
-            updateScore(AND_Result, colidedBots[0], colidedBots[1]);
-
+            return updateScore(AND_Result, colidedBots[0], colidedBots[1]);
+            
             // refactor the score-updating logic to use setter function instead of mutating array by reference
             break
         case "OR":
             const OR_Result = colidedBots[0].value || colidedBots[1].value
-            updateScore(OR_Result, colidedBots[0], colidedBots[1]);
+            return updateScore(OR_Result, colidedBots[0], colidedBots[1]);
             break
         case "XOR":
             const XOR_Result = colidedBots[0].value ^ colidedBots[1].value
-            updateScore(XOR_Result, colidedBots[0], colidedBots[1]);
+            return updateScore(XOR_Result, colidedBots[0], colidedBots[1]);
             break
         case "NOR":
             const NOR_Result = !(colidedBots[0].value || colidedBots[1].value)
-            updateScore(NOR_Result, colidedBots[0], colidedBots[1])
+            return updateScore(NOR_Result, colidedBots[0], colidedBots[1])
             break
     }
 }
