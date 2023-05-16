@@ -1,3 +1,5 @@
+import BotClass from "../components/BotClass"
+
 const checkCollision = (botsArr) =>{
     // check over the current location of each robot
     //if two robots have the same location number
@@ -18,9 +20,32 @@ const checkCollision = (botsArr) =>{
 
 const updateScore = (result, botOne, botTwo) => {
     if(result){
-        botOne.wins = botOne.wins + 1
-        botTwo.loses = botTwo.loses + 1
-        return botTwo
+        // botOne.wins = botOne.wins + 1
+        // botTwo.loses = botTwo.loses + 1
+
+        const botOneClone = new BotClass(
+            botOne.position,
+            botOne.direction,
+            botOne.tile,
+            botOne.name,
+            botOne.colorClass,
+            botOne.value,
+            botOne.wins + 1,
+            botOne.loses
+        );
+
+        const botTwoClone = new BotClass(
+            botTwo.position,
+            botTwo.direction,
+            botTwo.tile,
+            botTwo.name,
+            botTwo.colorClass,
+            botTwo.value,
+            botTwo.wins,
+            botTwo.loses + 1
+        );
+        
+        return [botOneClone, botTwoClone]
     }
     else{
         console.log("It's a a tie!")
