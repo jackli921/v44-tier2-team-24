@@ -6,6 +6,7 @@ const checkCollision = (botsArr) =>{
         //then collision occurred
         //write logic for collision
     const locationArr = botsArr.map(bot => bot.position)
+
     console.log("Location array", locationArr)
     
     for (let i = 0; i < locationArr.length; i++){
@@ -53,11 +54,14 @@ const updateScore = (result, botOne, botTwo) => {
     }
 }
 
-const handleCollision = (botsArr, operator) => {
+const handleCollision = (botsArr, operator, currBotName) => {
     console.log('COLLISION!!!!!!!!!!')
 
     console.log(botsArr[0].printBotData())
     console.log(botsArr[1].printBotData())
+    console.log(botsArr[2].printBotData())
+
+    //[bot1, bot2, bot3]
 
     const positionMap = new Map()
 
@@ -76,7 +80,7 @@ const handleCollision = (botsArr, operator) => {
     let colidedPosition 
 
     //will hold an array of bots that have collided
-    const colidedBots = []
+    const colidedBots = ['','']
     
     //only get the positions where there is more than 1 bots
     for (const [key, value] of positionMap.entries()) {
@@ -86,12 +90,19 @@ const handleCollision = (botsArr, operator) => {
         }
     }
     
-    console.log("Collision position", colidedPosition)
+    console.log("CurrBotNAme ", currBotName)
 
     //find all bots with matching collision position
     for(let i = 0; i < botsArr.length; i++){
         if(botsArr[i].position == colidedPosition){
-            colidedBots.push(botsArr[i])
+            console.log("CurrBotNAme ", currBotName, "BotBeing looked at", botsArr[i].name)
+
+            if(currBotName === botsArr[i].name){
+                colidedBots[0] = botsArr[i]
+            }else{
+                colidedBots[1] = botsArr[i]
+            }
+            
         }
     }
 

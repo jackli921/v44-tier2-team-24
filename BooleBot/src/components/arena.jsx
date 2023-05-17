@@ -14,7 +14,7 @@ export default function Arena(props) {
   const [isValidPosition, setIsValidPosition] = useState(false);
   const [initialPosition, setInitialPosition] = useState([]);
   const [totalTileNum, setTotalTileNum] = useState(null);
-  const [numTilesPerSide, setNumTilesPerSide] = useState(5);
+  const [numTilesPerSide, setNumTilesPerSide] = useState(4);
   const [isGameRunning, setIsGameRunning] = useState(false);
   const [operator, setOperator] = useState("AND");
   const [leaderboard, setLeaderboard] = useState({});
@@ -24,9 +24,8 @@ export default function Arena(props) {
 
   const [botsArr, setBotsArr] = useState([
     new BotClass(1, 1, numTilesPerSide, "bot1", "red", 1),
-    new BotClass(4, 4, numTilesPerSide, "bot2", "blue", 1),
-    new BotClass(23, 2, numTilesPerSide, "bot3", "green", 1),
-    new BotClass(15, 3, numTilesPerSide, "bot4", "yellow", 1)
+    new BotClass(7, 4, numTilesPerSide, "bot2", "blue", 1),
+    new BotClass(12, 1, numTilesPerSide, "bot3", "yellow", 1)
   ]);
 
   const arenaStyles = {
@@ -59,7 +58,7 @@ export default function Arena(props) {
     return (
       <div
         key={tilePosition + 1}
-        data-position={tilePosition + 1}
+        data-position={tilePosition}
         className={`tile ${tileClass}`}
       >
         {tilePosition}
@@ -67,43 +66,46 @@ export default function Arena(props) {
     );
   };
 
-  console.log(botsArr)
-  console.log(leaderboard)
 
-  // useEffect(()=>{
+  useEffect(()=>{
     
-  //   let gameInterval;
+    let gameInterval;
     
-  //   if(isGameRunning){
-  //       gameInterval = setInterval(()=>{
-  //        startBattle();
-  //       },2000)
-  //   }
+    if(isGameRunning){
+        gameInterval = setInterval(()=>{
+          startBattle();
+        },2000)
+    }
 
-  //   return ()=> clearInterval(gameInterval)
+    return ()=> clearInterval(gameInterval)
 
-  // },[isGameRunning])
-
-
+  },[isGameRunning])
  
 
-  // useEffect(()=>{
+  useEffect(()=>{
 
-  //       const arrayofObj = botsArr.map(prev =>{
-  //         const botObj = {
-  //           wins: prev.wins,
-  //           loses: prev.loses
-  //         }
-  //         return {
-  //           [prev.name]:botObj
-  //         }
-  //       })
+        const arrayofObj = botsArr.map(prev =>{
+          const botObj = {
+            wins: prev.wins,
+            loses: prev.loses
+          }
+          return {
+            [prev.name]:botObj
+          }
+        })
 
-  //       const mergedObj =  Object.assign({}, ...arrayofObj)
+        const mergedObj =  Object.assign({}, ...arrayofObj)
 
-  //       setLeaderboard(mergedObj)
+        setLeaderboard(mergedObj)
 
-  // },[])
+  },[])
+
+// useEffect(()=>{
+//     if (botsArr.length == 1) {
+//       setIsGameRunning(false);
+//     }
+
+// },[botsArr])
 
   function startGame() {
     // add setInterval and removeInterval
@@ -113,7 +115,9 @@ export default function Arena(props) {
     //brainstorm ideas for visually representing the collision operation so the user can more easily understand what happened 
 
     setIsGameRunning(true);
-    startBattle()
+    setTimeout(()=>{
+      startBattle();
+    }, 500)
 
     //make a copy of botsArr (initial scores of all robots) when the game begins
   }
@@ -130,7 +134,8 @@ export default function Arena(props) {
           //create a new object, with the same properties but new position
 
           if (checkCollision(botsArr)) {
-            const losingObj = handleCollision(botsArr, operator);
+            const losingObj = handleCollision(botsArr, operator, bot.name);
+
             console.log("LOSIGN OBJ", losingObj)
             if (losingObj) {
 
@@ -149,25 +154,7 @@ export default function Arena(props) {
                     loses: losingObj[1].loses
                   }
                 }
-
-                // console.log(leaderboard)
-                // const newLeaderBoard =  prev.map((bot) => {
-                //   if(bot.name === losingObj[0].name){
-                //     return losingObj[0]
-                //   }
-                //   else if(bot.name === losingObj[1].name){
-                //     return losingObj[1]
-                //   }
-                //   else{
-                //     return bot
-                //   }
-                // });
-
-                // console.log("NEW LEADREBOARD", newLeaderBoard)
-                // return newLeaderBoard
               });
-              console.log("After LEADER BOARD CHANGE ", leaderboard)
-
 
               setBotsArr((prevBots => {
                 const newBotsArr = prevBots.map( bot => {
@@ -189,13 +176,12 @@ export default function Arena(props) {
 
           setBotsArr((prev) => {
             const newBotsArr = prev.filter((bot) => bot.loses == 0);
+            
 
             return newBotsArr;
           });
 
-          if (botsArr.length == 1) {
-            setIsGameRunning(false);
-          }
+      
 
           //   //create a new copy of botsArray with updated property values
           //   const newBotsArr = botsArr.map((oldBot) => {
