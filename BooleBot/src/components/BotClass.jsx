@@ -41,9 +41,9 @@ class BotClass {
         }
         
         let randIndex = generateRandomNumber(validDirections.length)
-        // console.log(`old direction ${this.printDirection()}`)
+        console.log(`old direction ${this.printDirection()}`)
         this.direction = validDirections[randIndex - 1]
-        // console.log(`New direction ${this.printDirection()}`)
+        console.log(`New direction ${this.printDirection()}`)
 
     }
 
@@ -104,7 +104,7 @@ class BotClass {
     }
     
     calcNextMove() {
-        // console.log(`Moving Bot : ${this.printBotData()}`)
+        console.log(`Moving Bot : ${this.printBotData()}`)
 
         this.setNextDirection()
 

@@ -57,12 +57,6 @@ const updateScore = (result, botOne, botTwo) => {
 const handleCollision = (botsArr, operator, currBotName) => {
     console.log('COLLISION!!!!!!!!!!')
 
-    console.log(botsArr[0].printBotData())
-    console.log(botsArr[1].printBotData())
-    console.log(botsArr[2].printBotData())
-
-    //[bot1, bot2, bot3]
-
     const positionMap = new Map()
 
     botsArr.forEach( bot => {
