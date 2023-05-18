@@ -67,57 +67,55 @@ export default function Arena(props) {
   };
 
 
-  // useEffect(()=>{
-    
-  //   let gameInterval;
-    
-  //   if(isGameRunning){
-  //       gameInterval = setInterval(()=>{
-  //         startBattle();
-  //       },2000)
-  //   }
+  //make scoreboard
+    useEffect(() => {
+      const arrayofObj = botsArr.map((prev) => {
+        const botObj = {
+          wins: prev.wins,
+          loses: prev.loses,
+        };
+        return {
+          [prev.name]: botObj,
+        };
+      });
 
-  //   return ()=> clearInterval(gameInterval)
+      const mergedObj = Object.assign({}, ...arrayofObj);
 
-  // },[isGameRunning])
+      setLeaderboard(mergedObj);
+    }, []);
+
+
+    
+  useEffect(()=>{
+    
+    let gameInterval;
+    
+    if(isGameRunning){
+        gameInterval = setInterval(()=>{
+          startBattle();
+        },1000)
+    }
+
+    return ()=> clearInterval(gameInterval)
+
+  },[isGameRunning])
  
 
-  useEffect(()=>{
-        
-        const arrayofObj = botsArr.map(prev =>{
-          const botObj = {
-            wins: prev.wins,
-            loses: prev.loses
-          }
-          return {
-            [prev.name]:botObj
-          }
-        })
+useEffect(()=>{
+    if (botsArr.length == 1) {
+      setIsGameRunning(false);
+    }
 
-        const mergedObj =  Object.assign({}, ...arrayofObj)
+},[botsArr])
 
-        setLeaderboard(mergedObj)
 
-  },[])
 
-// useEffect(()=>{
-//     if (botsArr.length == 1) {
-//       setIsGameRunning(false);
-//     }
 
-// },[botsArr])
 
   function startGame() {
-    // add setInterval and removeInterval
-    // refactor the score-updating logic to use setter function instead of mutating array by reference
-    // add scoreboard array to keep track of total wins and loses for each bot before losing bot is removed from botsArr
-
-    //brainstorm ideas for visually representing the collision operation so the user can more easily understand what happened 
-
+  
     setIsGameRunning(true);
-    startBattle()
-
-    //make a copy of botsArr (initial scores of all robots) when the game begins
+    // startBattle()
   }
 
 
@@ -136,7 +134,6 @@ export default function Arena(props) {
         // console.log("BOTS ARRAY BEFORE", botsArr)
         newBotsArr.forEach((bot) => {
           //will hold a new copy of the bots array
-
           
           bot.calcNextMove();
           //map each old state
@@ -195,6 +192,7 @@ export default function Arena(props) {
           
           if(index){
             newBotsArr.splice(index, 1)
+            setBotsArr(() => newBotsArr)
           }
 
         });
